@@ -1,0 +1,100 @@
+import React, { Component } from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Table from './common/table.component';
+import StudentList from './studentList.component';
+
+class App extends Component {
+  state = {
+    data: {},
+  };
+ 
+  render() { 
+    const items = this.state.data.items || [];
+    return (
+      <div>
+        <div className="container">
+          <br />
+          <StudentList />
+          <Table items={items} columns={[]} />
+        </div>
+      </div>
+    );
+  }
+}
+ 
+export default App;
+---------------------------------------------------------
+import React from 'react';
+import TableHeader from './table.header.component';
+import TableBody from './table.body.component';
+
+function Table({ items, columns }) {
+  return (
+    <table className="table">
+      <TableHeader columns={columns} />
+      <TableBody items={items} columns={columns} />
+    </table>
+  );
+}
+
+export default Table;
+--------------------------------------------------
+import React from 'react';
+
+function TableBody({ items, columns }) {
+  return (
+    <tbody>
+      {items.map((item, index) => (
+        <tr key={index}>
+          {columns.map(column => (
+            <td key={column.path}>{item[column.path]}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  );
+}
+ 
+export default TableBody;
+---------------------------------------------
+import React from 'react';
+
+function TableHeader({ columns }) {
+  return (
+    <thead>
+      <tr>
+        {columns.map(column => (
+          <th key={column.label}>{column.label}</th>
+        ))}
+      </tr>
+    </thead>
+  );
+}
+ 
+export default TableHeader;
+-----------------------------------------------
+import React, { Component } from 'react';
+import Table from './common/table.component';
+
+class StudentList extends Component {
+  state = { 
+    data: [
+      { name: "Shakil", roll: 212 },
+      { name: "Nabil", roll: 25 }
+    ],
+  }; 
+
+  render() { 
+    return (
+      <Table 
+        items={this.state.data}
+        columns={[
+          { label: "Name", path: "name" },
+          { label: "Roll", path: "roll" }
+        ]}
+      />
+    );
+  }
+}
+ 
+export default StudentList;
